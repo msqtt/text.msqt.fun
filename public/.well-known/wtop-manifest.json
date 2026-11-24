@@ -1,0 +1,140 @@
+{
+  "protocolVersion": "1.0",
+  "name": "text-tool",
+  "displayName": "文字工坊",
+  "version": "1.0.0",
+  "viewport": { "width": 980, "height": 680 },
+  "methods": [
+    {
+      "name": "find",
+      "displayName": "查找",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["text", "query"],
+        "properties": {
+          "text": { "type": "string", "description": "待查找文本" },
+          "query": { "type": "string", "minLength": 1, "description": "查找内容" },
+          "regex": { "type": "boolean", "default": false, "description": "按正则表达式" },
+          "ignoreCase": { "type": "boolean", "default": false, "description": "忽略大小写" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["count"],
+        "properties": {
+          "count": { "type": "integer" },
+          "matches": { "type": "array", "items": { "type": "string" } },
+          "firstIndex": { "type": "integer" }
+        }
+      }
+    },
+    {
+      "name": "replace",
+      "displayName": "替换",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["text", "query", "replacement"],
+        "properties": {
+          "text": { "type": "string" },
+          "query": { "type": "string", "minLength": 1 },
+          "replacement": { "type": "string", "description": "替换为（支持 $1 / $&）" },
+          "regex": { "type": "boolean", "default": false },
+          "ignoreCase": { "type": "boolean", "default": false },
+          "all": { "type": "boolean", "default": true, "description": "替换全部" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["result", "count"],
+        "properties": { "result": { "type": "string" }, "count": { "type": "integer" } }
+      }
+    },
+    {
+      "name": "generate",
+      "displayName": "文本生成",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["mode"],
+        "properties": {
+          "mode": { "enum": ["repeat", "lorem", "lines", "uuid"], "default": "lines" },
+          "count": { "type": "integer", "minimum": 1, "maximum": 10000, "default": 5 },
+          "text": { "type": "string", "description": "repeat 模式的模板" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["result"],
+        "properties": { "result": { "type": "string" }, "length": { "type": "integer" } }
+      }
+    },
+    {
+      "name": "trim",
+      "displayName": "文本裁剪",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["text", "mode"],
+        "properties": {
+          "text": { "type": "string" },
+          "mode": { "enum": ["ends", "lines", "collapse", "blank", "spaces"], "default": "ends", "description": "首尾/逐行/压缩空格/去空行/去全部空白" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["result"],
+        "properties": { "result": { "type": "string" }, "removed": { "type": "integer" } }
+      }
+    },
+    {
+      "name": "case",
+      "displayName": "大小写转换",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["text", "mode"],
+        "properties": {
+          "text": { "type": "string" },
+          "mode": { "enum": ["upper", "lower", "title", "camel", "snake", "reverse"], "default": "upper" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["result"],
+        "properties": { "result": { "type": "string" } }
+      }
+    },
+    {
+      "name": "lines",
+      "displayName": "行处理",
+      "mode": "headless",
+      "stateless": true,
+      "timeoutMs": 10000,
+      "input": {
+        "type": "object",
+        "required": ["text", "op"],
+        "properties": {
+          "text": { "type": "string" },
+          "op": { "enum": ["dedupe", "sort", "reverse", "number"], "default": "dedupe" }
+        }
+      },
+      "output": {
+        "type": "object",
+        "required": ["result"],
+        "properties": { "result": { "type": "string" }, "count": { "type": "integer" } }
+      }
+    }
+  ]
+}

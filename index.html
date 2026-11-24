@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文字工坊 · text.msqt.fun</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>文字工坊</h1>
+      <span id="status" class="badge" data-state="idle">初始化…</span>
+    </header>
+    <nav id="tabs" class="tabs">
+      <button data-tab="find" class="active">查找</button>
+      <button data-tab="replace">替换</button>
+      <button data-tab="generate">生成</button>
+      <button data-tab="trim">裁剪</button>
+      <button data-tab="case">大小写</button>
+      <button data-tab="lines">行处理</button>
+    </nav>
+    <main class="layout">
+      <section class="pane">
+        <label for="input">输入文本</label>
+        <textarea id="input" placeholder="粘贴或输入待处理文本…"></textarea>
+        <div class="meta"><span id="input-meta">0 字</span><button id="clear" class="btn small">清空</button></div>
+      </section>
+      <section class="pane controls">
+        <div class="op" data-op="find">
+          <label>查找内容 <input id="find-query" type="text" placeholder="要查找的文字或正则" /></label>
+          <label class="check"><input id="find-regex" type="checkbox" /> 正则表达式</label>
+          <label class="check"><input id="find-ignore" type="checkbox" /> 忽略大小写</label>
+        </div>
+        <div class="op hidden" data-op="replace">
+          <label>查找内容 <input id="rep-query" type="text" /></label>
+          <label>替换为 <input id="rep-with" type="text" placeholder="支持 $1 / $&" /></label>
+          <label class="check"><input id="rep-regex" type="checkbox" /> 正则表达式</label>
+          <label class="check"><input id="rep-ignore" type="checkbox" /> 忽略大小写</label>
+          <label class="check"><input id="rep-all" type="checkbox" checked /> 替换全部</label>
+        </div>
+        <div class="op hidden" data-op="generate">
+          <label>模式
+            <select id="gen-mode">
+              <option value="lines">编号示例行</option>
+              <option value="repeat">重复模板</option>
+              <option value="lorem">Lorem 段落</option>
+              <option value="uuid">UUID 列表</option>
+            </select>
+          </label>
+          <label>数量 <input id="gen-count" type="number" min="1" max="10000" value="5" /></label>
+          <label>模板（重复模式）<input id="gen-text" type="text" placeholder="你好，世界！" /></label>
+        </div>
+        <div class="op hidden" data-op="trim">
+          <label>裁剪方式
+            <select id="trim-mode">
+              <option value="ends">去首尾空白</option>
+              <option value="lines">逐行去首尾空白</option>
+              <option value="collapse">压缩连续空格</option>
+              <option value="blank">删除空行</option>
+              <option value="spaces">删除全部空白</option>
+            </select>
+          </label>
+        </div>
+        <div class="op hidden" data-op="case">
+          <label>转换方式
+            <select id="case-mode">
+              <option value="upper">全部大写</option>
+              <option value="lower">全部小写</option>
+              <option value="title">词首大写</option>
+              <option value="camel">camelCase</option>
+              <option value="snake">snake_case</option>
+              <option value="reverse">反转文本</option>
+            </select>
+          </label>
+        </div>
+        <div class="op hidden" data-op="lines">
+          <label>行操作
+            <select id="lines-op">
+              <option value="dedupe">去重</option>
+              <option value="sort">排序</option>
+              <option value="reverse">倒序</option>
+              <option value="number">加行号</option>
+            </select>
+          </label>
+        </div>
+        <button id="run" class="btn primary">执行</button>
+        <p id="message" class="message"></p>
+      </section>
+      <section class="pane">
+        <label for="output">输出结果</label>
+        <textarea id="output" readonly placeholder="结果会显示在这里…"></textarea>
+        <div class="meta"><span id="output-meta">0 字</span><button id="copy" class="btn small">复制</button><button id="use-output" class="btn small">结果转输入</button></div>
+      </section>
+    </main>
+    <footer class="foot">纯前端处理，文本不出浏览器 · 支持 WTOP 协议接入 <a href="https://recycle.msqt.fun">可回收编排站</a></footer>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
