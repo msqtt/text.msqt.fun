@@ -13,4 +13,4 @@
 
 ## 部署链路
 
-GitHub public 仓库 → Netlify（netlify.toml，pnpm 10 / node 22）→ Cloudflare CNAME `text` → Netlify 应用域名（proxied=false，由 Netlify 签发 TLS）。
+GitHub public 仓库 → GitHub Actions（push main：pnpm 10 / node 22 构建）→ `scripts/netlify-deploy.mjs` Netlify API 直传发布 → Cloudflare CNAME `text` → `text-msqt-fun.netlify.app`（proxied=false，TLS 由 Netlify 签发）。netlify.toml 随部署上传，redirects/headers 生效。

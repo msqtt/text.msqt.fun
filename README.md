@@ -23,7 +23,9 @@ pnpm build      # tsc 类型检查 + vite 构建
 
 ## 部署
 
-GitHub `msqtt/text.msqt.fun`（public）→ Netlify 自动构建 → CNAME `text.msqt.fun`。
+GitHub `msqtt/text.msqt.fun`（public）→ GitHub Actions（`.github/workflows/deploy.yml`）push main 自动 `pnpm build` → `scripts/netlify-deploy.mjs` 经 Netlify API 直传发布 → CNAME `text.msqt.fun` → `text-msqt-fun.netlify.app`。
+
+Netlify 站点：`text-msqt-fun`（id `55f37ab8-cd35-4943-9541-3c0c48278db8`）。账号未安装 Netlify GitHub App，原生 git 联动不可用，故由 Actions 承担自动构建；仓库 Secrets：`NETLIFY_AUTH_TOKEN`、`NETLIFY_SITE_ID`。
 
 ## WTOP 方法
 
