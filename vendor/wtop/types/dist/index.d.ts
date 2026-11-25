@@ -42,7 +42,7 @@ export interface FileRef {
     mime?: string;
 }
 export type WtopFile = Blob | ArrayBuffer | FileRef;
-export type ErrorCode = 'HANDSHAKE_FAILED' | 'VERSION_MISMATCH' | 'METHOD_NOT_FOUND' | 'INVALID_INPUT' | 'INVALID_OUTPUT' | 'TIMEOUT' | 'HUMAN_TIMEOUT' | 'CANCELLED' | 'TOOL_CRASHED' | 'BUSINESS_ERROR' | 'FILE_TOO_LARGE';
+export type ErrorCode = 'HANDSHAKE_FAILED' | 'VERSION_MISMATCH' | 'METHOD_NOT_FOUND' | 'INVALID_INPUT' | 'INVALID_OUTPUT' | 'TIMEOUT' | 'HUMAN_TIMEOUT' | 'CANCELLED' | 'TOOL_CRASHED' | 'BUSINESS_ERROR' | 'FILE_TOO_LARGE' | 'INPUT_REQUIRED';
 export declare const ERROR_CODES: readonly ErrorCode[];
 export declare class WtopError extends Error {
     code: ErrorCode;

@@ -1,3 +1,5 @@
+import { WtopError } from '@wtop/provider';
+
 export interface FindParams { text: string; query: string; regex?: boolean; ignoreCase?: boolean }
 export interface ReplaceParams extends FindParams { replacement: string; all?: boolean }
 export interface GenerateParams { mode: 'repeat' | 'lorem' | 'lines' | 'uuid'; count?: number; text?: string }
@@ -10,7 +12,7 @@ function buildRe(query: string, regex: boolean, ignoreCase: boolean, global: boo
   try {
     return new RegExp(source, `${global ? 'g' : ''}${ignoreCase ? 'i' : ''}`);
   } catch (e) {
-    throw new Error(`无效的正则表达式: ${String(e instanceof Error ? e.message : e)}`);
+    throw new WtopError('INVALID_INPUT', `无效的正则表达式: ${String(e instanceof Error ? e.message : e)}`);
   }
 }
 

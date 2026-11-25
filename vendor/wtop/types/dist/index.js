@@ -13,7 +13,7 @@ export function defineManifest(m) {
 export const ERROR_CODES = [
     'HANDSHAKE_FAILED', 'VERSION_MISMATCH', 'METHOD_NOT_FOUND',
     'INVALID_INPUT', 'INVALID_OUTPUT', 'TIMEOUT', 'HUMAN_TIMEOUT',
-    'CANCELLED', 'TOOL_CRASHED', 'BUSINESS_ERROR', 'FILE_TOO_LARGE',
+    'CANCELLED', 'TOOL_CRASHED', 'BUSINESS_ERROR', 'FILE_TOO_LARGE', 'INPUT_REQUIRED',
 ];
 export class WtopError extends Error {
     constructor(code, message, details) {
