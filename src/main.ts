@@ -22,6 +22,20 @@ const provider = createProvider({
     'http://127.0.0.1:5179',
   ],
   autoHandshake: false,
+  mirror: {
+    start: ({ method, params }) => {
+      setActiveTab(method as OpName);
+      const p = params as { text?: string };
+      if (typeof p.text === 'string') {
+        input.value = p.text;
+        $('input-meta').textContent = `${p.text.length} 字`;
+      }
+      message.textContent = `HOST 调用 ${method}…`;
+      message.classList.remove('err');
+    },
+    result: ({ method, data }) => render(method as OpName, data as Record<string, unknown>),
+    error: ({ error }) => { message.textContent = `[${error.code}] ${error.message}`; message.classList.add('err'); },
+  },
 });
 
 provider.registerMethod('find', async (p) => find(p as Parameters<typeof find>[0]));
@@ -78,13 +92,17 @@ async function run() {
   }
 }
 
+function setActiveTab(op: OpName) {
+  active = op;
+  document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('active', (b as HTMLElement).dataset.tab === op));
+  document.querySelectorAll('.op').forEach((el) => el.classList.toggle('hidden', (el as HTMLElement).dataset.op !== op));
+  message.textContent = '';
+}
+
 $('tabs').addEventListener('click', (e) => {
   const btn = (e.target as HTMLElement).closest('button');
   if (!btn?.dataset.tab) return;
-  active = btn.dataset.tab as OpName;
-  document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('active', b === btn));
-  document.querySelectorAll('.op').forEach((el) => el.classList.toggle('hidden', (el as HTMLElement).dataset.op !== active));
-  message.textContent = '';
+  setActiveTab(btn.dataset.tab as OpName);
 });
 
 $('run').addEventListener('click', () => void run());
